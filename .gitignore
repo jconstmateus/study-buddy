@@ -1,0 +1,27 @@
+# Java / Spring Boot
+backend-java/target/
+backend-java/*.class
+backend-java/.gradle/
+backend-java/build/
+*.jar
+
+# IDEs
+.idea/
+.vscode/
+
+# Python
+ai-service-python/__pycache__/
+ai-service-python/venv/
+
+# Variáveis de ambiente (importante!)
+.env
+*.env
+application-local.properties
+
+# Sistema Operativo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
