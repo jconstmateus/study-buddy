@@ -17,11 +17,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping // POST (create object with information on Body)
-    public User create(@RequestBody User user) {
-        return userService.save(user);
-    }
-
     @GetMapping // GET (get a list of objects)
     public List<User> findAll() {
         return userService.findAll();
