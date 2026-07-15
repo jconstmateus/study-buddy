@@ -10,10 +10,13 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    // Constructor
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     // Register new User with encode method
@@ -30,13 +33,13 @@ public class AuthService {
     }
 
     // Login of already existing user
-    public User login(String email, String password) {
+    public String login(String email, String password) {
         User user = userRepository.findByEmail(email);   // Use of findByEmail extended in UserRepository
 
         if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid email or password");
         }
 
-        return user;
+        return jwtService.generateToken(email);
     }
 }
