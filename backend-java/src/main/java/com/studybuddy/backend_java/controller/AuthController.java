@@ -33,8 +33,8 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         try {
-            User user = authService.login(request.getEmail(), request.getPassword());
-            return ResponseEntity.ok(user);
+            String token = authService.login(request.getEmail(), request.getPassword());
+            return ResponseEntity.ok(token);
         } catch (RuntimeException e) {
             return ResponseEntity.status(401).body(e.getMessage());
         }
