@@ -1,0 +1,142 @@
+:root {
+  --brand-teal: #4f9d93;
+  --brand-teal-dark: #3d7d75;
+}
+
+.auth-shell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  min-height: 100vh;
+  min-height: 100dvh; /* Fixes mobile virtual keyboard viewport sizing */
+  background-color: #f5f5f4;
+  padding: 32px 16px;
+}
+
+.auth-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.auth-brand-logo {
+  width: 320px;
+  height: auto;
+}
+
+.auth-footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.auth-footer a {
+  color: var(--brand-teal-dark);
+  text-decoration: none;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+.auth-side-by-side {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+}
+
+.auth-card {
+  background-color: white;
+  border-radius: 12px;
+  border: 1px solid #e5e5e5;
+  padding: 2.5rem 2rem;
+  width: 340px;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-card h1 {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--brand-teal-dark);
+}
+
+.auth-subtitle {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0 0 1.5rem;
+}
+
+.auth-label {
+  font-size: 13px;
+  color: #6b7280;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: var(--brand-teal);
+}
+
+/* Gray out fields while the login/register request is loading */
+.auth-input:disabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.auth-button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  background-color: var(--brand-teal);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.auth-button:hover:not(:disabled) {
+  background-color: var(--brand-teal-dark);
+}
+
+/* Visual state for loading/disabled button */
+.auth-button:disabled {
+  background-color: #a9cdc9;
+  cursor: not-allowed;
+}
+
+.auth-error {
+  color: #dc2626;
+  font-size: 13px;
+  margin-top: 12px;
+}
+
+.auth-success {
+  color: #16a34a;
+  font-size: 13px;
+  margin-top: 12px;
+}
