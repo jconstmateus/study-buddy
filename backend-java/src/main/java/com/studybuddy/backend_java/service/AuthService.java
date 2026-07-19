@@ -22,6 +22,17 @@ public class AuthService {
     // Register new User with encode method
     public User register(User user) {
 
+        // Verify required fields are not empty
+        if (user.getName() == null || user.getName().isBlank()) {
+            throw new RuntimeException("Name is required");
+        }
+        if (user.getEmail() == null || user.getEmail().isBlank()) {
+            throw new RuntimeException("Email is required");
+        }
+        if (user.getPassword() == null || user.getPassword().isBlank()) {
+            throw new RuntimeException("Password is required");
+        }
+
         // Verify if email already exists
         if (userRepository.findByEmail(user.getEmail()) != null) {
             throw new RuntimeException("Email already registered");
