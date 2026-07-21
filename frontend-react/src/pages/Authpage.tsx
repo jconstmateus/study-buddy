@@ -1,4 +1,5 @@
 import '../Auth.css';
+import { Link } from 'react-router-dom';
 import logo from '../assets/logo.jpg';
 import Login from '../components/Login';
 import Register from '../components/Register';
@@ -17,7 +18,7 @@ function Authpage() {
         </div>
 
         <footer className="auth-footer">
-            <a>About</a>
+            <Link className="navbar-link" to="/about">About</Link>
             <span>© 2026 Study Buddy</span>
         </footer>
         </div>

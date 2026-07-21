@@ -1,18 +1,11 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../Auth.css';
-
 function Dashboard() {
 
-    const navigate = useNavigate();
-
-return (
-
+  return (
     <div>
-        
+      <h1>Dashboard</h1>
     </div>
-)
+  );
 
 }
 
-export default Dashboard; 
+export default Dashboard;

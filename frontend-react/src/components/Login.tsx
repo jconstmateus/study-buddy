@@ -35,7 +35,7 @@ function Login() {
       if (request.ok) {
         localStorage.setItem("token", result);
         setError("");
-        navigate("/profile");
+        navigate("/dashboard");
 
       // Error - update the error
       } else {

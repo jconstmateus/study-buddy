@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
 
 function Profile() {
-
-  const navigate = useNavigate();
 
   // Tuples to update
   const [name, setName] = useState("");
@@ -50,14 +47,7 @@ function Profile() {
     loadProfile();
   }, []);
 
-
-  // Function to handle navigation and removal of token when loggout
-  function handleLogout() {
-    localStorage.removeItem("token");
-    navigate("/");
-  }
-
-  // Loading screen 
+  // Loading screen
   if (loading) {
     return <div className="auth-card">Loading...</div>;
   }
@@ -75,10 +65,6 @@ function Profile() {
 
           <label className="auth-label">Email</label>
           <p>{email}</p>
-
-          <button className="auth-button" onClick={handleLogout}>
-            Log out
-          </button>
         </>
       )}
     </div>

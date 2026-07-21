@@ -1,8 +1,3 @@
-:root {
-  --brand-teal: #4f9d93;
-  --brand-teal-dark: #3d7d75;
-}
-
 .auth-shell {
   display: flex;
   flex-direction: column;
