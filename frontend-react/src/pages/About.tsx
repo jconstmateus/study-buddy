@@ -65,12 +65,12 @@ const faqs = [
     answer: 'Just paste the text of your syllabus or upload a photo of it, and Study Buddy will automatically extract the dates and create calendar events for you.',
   },
   {
-    question: 'Is my data safe?',
-    answer: 'Your account and study materials are private and only accessible to you. We never share your data with third parties.',
-  },
-  {
     question: 'How does the AI tutor work?',
     answer: 'The AI tutor is a chatbot you can ask questions anytime, it helps explain concepts and clarify doubts related to your study materials.',
+  },
+  {
+    question: 'Is my data safe?',
+    answer: 'Your account and study materials are private and only accessible to you. We never share your data with third parties.',
   },
 ];
 

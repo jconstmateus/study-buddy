@@ -1,7 +1,6 @@
 package com.studybuddy.backend_java.controller;
 
-import com.studybuddy.backend_java.model.LoginRequest;
-import com.studybuddy.backend_java.model.User;
+import com.studybuddy.backend_java.model.*;
 import com.studybuddy.backend_java.service.AuthService;
 import com.studybuddy.backend_java.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -53,4 +52,46 @@ public class AuthController {
 
         return ResponseEntity.ok(user);
     }
+
+    @PutMapping("/me/change-password")
+    public ResponseEntity<?> setNewPassword(Authentication authentication, @RequestBody PassChange change) {
+
+        // Verify password first
+        try {
+            authService.verify(authentication.getName(), change.getPassword());
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(401).body(e.getMessage());
+        }
+
+        try {
+            ChangeResponse changeResponse = authService.changePassword(authentication.getName(), change.getNewPassword());
+            return ResponseEntity.ok(changeResponse);
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(409).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/me/change-email")
+    public ResponseEntity<?> setNewEmail(Authentication authentication, @RequestBody EmailChange change) {
+
+        // Verify password first
+        try {
+            authService.verify(authentication.getName(), change.getPassword());
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(401).body(e.getMessage());
+        }
+
+        try {
+            ChangeResponse changeResponse = authService.changeEmail(authentication.getName(), change.getNewEmail());
+            return ResponseEntity.ok(changeResponse);
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(409).body(e.getMessage());
+        }
+    }
 }
+
+
