@@ -1,0 +1,13 @@
+:root {
+  --brand-teal: #4f9d93;
+  --brand-teal-dark: #3d7d75;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+}
