@@ -1,6 +1,11 @@
 package com.studybuddy.backend_java.service;
 
-import com.studybuddy.backend_java.model.ChangeResponse;
+import com.studybuddy.backend_java.exceptions.EmailAlreadyExistsException;
+import com.studybuddy.backend_java.exceptions.InvalidCredentialsException;
+import com.studybuddy.backend_java.exceptions.MissingFieldsException;
+import com.studybuddy.backend_java.exceptions.UserNotFoundException;
+import com.studybuddy.backend_java.dto.ChangeResponse;
+import com.studybuddy.backend_java.dto.RegisterRequest;
 import com.studybuddy.backend_java.model.User;
 import com.studybuddy.backend_java.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -21,26 +26,30 @@ public class AuthService {
     }
 
     // Register new User with encode method
-    public User register(User user) {
+    public User register(RegisterRequest request) {
 
         // Verify required fields are not empty
-        if (user.getName() == null || user.getName().isBlank()) {
-            throw new RuntimeException("Name is required");
+        if (request.getName() == null || request.getName().isBlank()) {
+            throw new MissingFieldsException("Name is required");
         }
-        if (user.getEmail() == null || user.getEmail().isBlank()) {
-            throw new RuntimeException("Email is required");
+        if (request.getEmail() == null || request.getEmail().isBlank()) {
+            throw new MissingFieldsException("Email is required");
         }
-        if (user.getPassword() == null || user.getPassword().isBlank()) {
-            throw new RuntimeException("Password is required");
+        if (request.getPassword() == null || request.getPassword().isBlank()) {
+            throw new MissingFieldsException("Password is required");
         }
 
         // Verify if email already exists
-        if (userRepository.findByEmail(user.getEmail()) != null) {
-            throw new RuntimeException("Email already registered");
+        if (userRepository.findByEmail(request.getEmail()) != null) {
+            throw new EmailAlreadyExistsException("Email already registered");
         }
 
-        // Encoding password
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // Always build a fresh User — id stays null, so save() can only ever INSERT, never overwrite an existing row
+        User user = new User();
+        user.setName(request.getName());
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+
         return userRepository.save(user);   // Use of save from JPARepository
     }
 
@@ -49,7 +58,7 @@ public class AuthService {
         User user = userRepository.findByEmail(email);   // Use of findByEmail extended in UserRepository
 
         if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Invalid email or password");
+            throw new InvalidCredentialsException("Invalid email or password");
         }
 
         return jwtService.generateToken(email);
@@ -60,7 +69,7 @@ public class AuthService {
         User user = userRepository.findByEmail(email);   // Use of findByEmail extended in UserRepository
 
         if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Invalid password");
+            throw new InvalidCredentialsException("Invalid password");
         }
 
         return true;
@@ -71,7 +80,7 @@ public class AuthService {
         User user = userRepository.findByEmail(email);
 
         if (user == null) {
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException("User not found");
         }
 
         user.setPassword(passwordEncoder.encode(newPassword));
@@ -85,13 +94,13 @@ public class AuthService {
     public ChangeResponse changeEmail(String email, String newEmail) {
 
         if (userRepository.findByEmail(newEmail) != null) {
-            throw new RuntimeException("Email already registered");
+            throw new EmailAlreadyExistsException("Email already registered");
         }
 
         User user = userRepository.findByEmail(email);
 
         if (user == null) {
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException("User not found");
         }
 
         user.setEmail(newEmail);

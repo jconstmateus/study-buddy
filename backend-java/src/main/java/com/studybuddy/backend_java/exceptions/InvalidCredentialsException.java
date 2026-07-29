@@ -1,4 +1,4 @@
-package exceptions;
+package com.studybuddy.backend_java.exceptions;
 
 // Exception 401
 public class InvalidCredentialsException extends RuntimeException {

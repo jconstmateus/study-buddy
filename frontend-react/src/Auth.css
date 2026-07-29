@@ -5,7 +5,7 @@
   justify-content: center;
   gap: 32px;
   min-height: 100vh;
-  min-height: 100dvh; /* Fixes mobile virtual keyboard viewport sizing */
+  min-height: 100dvh; 
   background-color: #f5f5f4;
   padding: 32px 16px;
 }
@@ -56,6 +56,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin: 16px 0;
 }
 
 .auth-card h1 {
@@ -72,10 +73,25 @@
 }
 
 .auth-label {
-  font-size: 13px;
+  font-size: 16px;
   color: #6b7280;
   display: block;
   margin-bottom: 4px;
+}
+
+.profile-label-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.profile-label-row .auth-label {
+  margin-bottom: 0;
+}
+
+.profile-field {
+  margin: 16px 0;
 }
 
 .auth-input {
@@ -93,7 +109,6 @@
   border-color: var(--brand-teal);
 }
 
-/* Gray out fields while the login/register request is loading */
 .auth-input:disabled {
   background-color: #f3f4f6;
   color: #9ca3af;
@@ -118,7 +133,7 @@
   background-color: var(--brand-teal-dark);
 }
 
-/* Visual state for loading/disabled button */
+
 .auth-button:disabled {
   background-color: #a9cdc9;
   cursor: not-allowed;

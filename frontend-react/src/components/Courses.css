@@ -1,0 +1,139 @@
+.courses-page {
+  display: flex;
+  gap: 32px;
+  padding: 40px;
+  align-items: flex-start;
+}
+
+.courses-form-section {
+  flex: 0 0 300px;
+}
+
+.courses-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+.course-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  background-color: white;
+  transition: transform 0.15s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.course-card svg {
+  font-size: 28px;
+}
+
+.course-card span {
+  font-weight: 500;
+  text-align: center;
+  font-size: 14px;
+}
+
+.course-card-actions {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  display: flex;
+  gap: 6px;
+}
+
+.course-card-actions svg {
+  font-size: 13px;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.course-card-actions svg:hover {
+  color: #4b5563;
+}
+
+.add-card {
+  background-color: white;
+  border-radius: 12px;
+  border: 1px solid #e5e5e5;
+  padding: 2.5rem 2rem;
+  width: 250px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.add-card h1 {
+  margin: 5 5 4px;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--brand-teal-dark);
+}
+
+.course-label {
+  font-size: 16px;
+  color: #6b7280;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.course-input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.course-input-color {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid #d1d5db;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.course-input-color::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.course-input-color::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+.course-input:focus {
+  outline: none;
+  border-color: var(--brand-teal);
+}
+
+
+.course-button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  background-color: var(--brand-teal);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}

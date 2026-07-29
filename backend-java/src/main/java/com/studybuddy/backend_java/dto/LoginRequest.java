@@ -1,4 +1,4 @@
-package com.studybuddy.backend_java.model;
+package com.studybuddy.backend_java.dto;
 
 public class LoginRequest {
 

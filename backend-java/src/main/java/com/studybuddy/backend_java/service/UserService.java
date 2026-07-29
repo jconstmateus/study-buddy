@@ -1,7 +1,9 @@
 package com.studybuddy.backend_java.service;
 
+import com.studybuddy.backend_java.exceptions.UserNotFoundException;
 import com.studybuddy.backend_java.model.User;
 import com.studybuddy.backend_java.repository.UserRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,9 +33,25 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public User findByEmail(String email) { return userRepository.findByEmail(email); }
-
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
+
+    public User findByEmail(String email) {
+
+        User user = userRepository.findByEmail(email);
+
+        if (user == null) {
+            throw new UserNotFoundException("User not found");
+        }
+        return user;
+    }
+
+    public User getCurrentUser(Authentication authentication) {
+        String email = authentication.getName();
+        return findByEmail(email);
+    }
+
+
 }
+

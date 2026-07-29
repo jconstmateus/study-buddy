@@ -1,13 +1,13 @@
-package com.studybuddy.backend_java.model;
+package com.studybuddy.backend_java.dto;
 
-public class EmailChange {
+public class EmailChangeRequest {
 
     // Get only this info from body when logging
     private String password;
     private String newEmail;
 
     // Constructor
-    public EmailChange() {}
+    public EmailChangeRequest() {}
 
     // Getters and Setters
     public String getPassword() { return password; }

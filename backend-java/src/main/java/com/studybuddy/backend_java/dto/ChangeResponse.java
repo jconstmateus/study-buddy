@@ -1,4 +1,4 @@
-package com.studybuddy.backend_java.model;
+package com.studybuddy.backend_java.dto;
 
 // Small class to configure a padronized response when changing email/password
 public class ChangeResponse {

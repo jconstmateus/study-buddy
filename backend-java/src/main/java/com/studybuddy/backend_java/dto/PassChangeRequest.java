@@ -1,13 +1,13 @@
-package com.studybuddy.backend_java.model;
+package com.studybuddy.backend_java.dto;
 
-public class PassChange {
+public class PassChangeRequest {
 
     // Get only this info from body when logging
     private String password;
     private String newPassword;
 
     // Constructor
-    public PassChange() {}
+    public PassChangeRequest() {}
 
     // Getters and Setters
     public String getNewPassword() { return newPassword; }

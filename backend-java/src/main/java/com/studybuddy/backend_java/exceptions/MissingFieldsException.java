@@ -1,4 +1,8 @@
 package com.studybuddy.backend_java.exceptions;
 
-public class MissingFieldsException {
+// Exception 400
+public class MissingFieldsException extends RuntimeException {
+    public MissingFieldsException(String message) {
+        super(message);
+    }
 }
