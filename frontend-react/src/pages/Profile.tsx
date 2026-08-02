@@ -167,7 +167,6 @@ function Profile() {
       {!error && (
         <>
           <div className="profile-label-row">
-
             <FaRegUser />
             <label className="auth-label">Name</label>
           </div>

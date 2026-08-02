@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../components/Courses.css'
 import { FaBook, FaRegTrashAlt } from "react-icons/fa";
 
@@ -16,6 +17,7 @@ function Courses() {
   const [addCourseSubmitting, setAddCourseSubmitting] = useState(false);
   const [nameCourse, setNameCourse] = useState("");
   const [color, setColor] = useState("");
+  const [idDelete, setIdDelete] = useState<number | null>(null);
 
   // LOADING COURSES INFORMATION - useEffect() load automatically without input
   useEffect(() => {
@@ -45,7 +47,7 @@ function Courses() {
   }, []);
 
   // Submit handler for adding courses
-  async function handleAddCourse(e: React.FormEvent) {
+  async function handleAdd(e: React.FormEvent) {
     e.preventDefault(); // Prevent default response from React to reload page
     setAddCourseSubmitting(true);
 
@@ -80,6 +82,33 @@ function Courses() {
     return <div className="auth-card">Loading...</div>;
   }
 
+  // Click handler for deleting courses
+  async function handleDelete(id: number) {
+    setIdDelete(id);
+
+    const token = localStorage.getItem("token");
+
+    try {
+      const request = await fetch(`http://localhost:8080/courses/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": "Bearer " + token
+        },
+      });
+
+      if (request.ok) {
+        setCourses(courses.filter((course) => course.id !== id)); // Remove course from the list
+      } else {
+        setError(await request.text());
+      }
+
+    } catch {
+      setError("Could not connect to the server. Please try again.");
+    } finally {
+      setIdDelete(null);
+    }
+  }
+
 return (
   <div className="courses-page">
 
@@ -88,7 +117,7 @@ return (
 
       {error && <p className="auth-error">{error}</p>}
 
-      <form onSubmit={handleAddCourse}>
+      <form onSubmit={handleAdd}>
         <input
           type="text"
           className="course-input"
@@ -116,9 +145,18 @@ return (
       {courses.map((course) => (
         <div key={course.id} className="course-card">
           <FaBook style={{ color: course.color }} />
-          <span>{course.name}</span>
+          <span style = {{cursor: "pointer"}}>
+            <Link to={`/course/${course.id}`}>
+            {course.name}
+            </Link>
+          </span>
           <div className="course-card-actions">
-            <FaRegTrashAlt />
+            <FaRegTrashAlt
+              onClick={() => idDelete === null && handleDelete(course.id)}
+              style={{
+                cursor: idDelete === course.id ? "not-allowed" : "pointer"
+              }}
+            />
           </div>
         </div>
       ))}

@@ -1,15 +1,16 @@
 package com.studybuddy.backend_java.config;
 
-import com.studybuddy.backend_java.exceptions.EmailAlreadyExistsException;
-import com.studybuddy.backend_java.exceptions.InvalidCredentialsException;
-import com.studybuddy.backend_java.exceptions.MissingFieldsException;
-import com.studybuddy.backend_java.exceptions.UserNotFoundException;
+import com.studybuddy.backend_java.exceptions.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     // Specific exceptions
     @ExceptionHandler(EmailAlreadyExistsException.class)
@@ -32,9 +33,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(400).body(e.getMessage());
     }
 
+    @ExceptionHandler(NotAuthorizedException.class)
+    public ResponseEntity<?> handleNotAuthorizedException(NotAuthorizedException e) {
+        return ResponseEntity.status(403).body(e.getMessage());
+    }
+
     // Handle general exception
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception e) {
+        logger.error("Unhandled exception", e);
         return ResponseEntity.status(500).body("Internal error");
     }
 

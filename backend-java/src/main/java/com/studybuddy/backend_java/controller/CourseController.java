@@ -1,5 +1,6 @@
 package com.studybuddy.backend_java.controller;
 
+import com.studybuddy.backend_java.exceptions.NotAuthorizedException;
 import com.studybuddy.backend_java.model.Course;
 import com.studybuddy.backend_java.model.User;
 import com.studybuddy.backend_java.service.CourseService;
@@ -35,21 +36,31 @@ public class CourseController {
         return courseService.findById(id);
     }
 
-    @DeleteMapping("/{id}") // DELETE (object by id extracted in the path)
-    public void deleteById(@PathVariable Long id) {
-        courseService.deleteById(id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity <?> deleteById(@PathVariable Long id, Authentication authentication) {
+        User user = userService.getCurrentUser(authentication);
+        Course course = courseService.findById(id);
+
+        if (user.getId() == course.getUser().getId()) {
+            courseService.deleteById(id);
+            return ResponseEntity.ok().build();
+        } else {
+            throw new NotAuthorizedException("Not Authorized to Delete This Course");
+        }
     }
 
     @PutMapping("/{id}") // PUT (update object by id, with new data on Body)
-    public Course update(@PathVariable Long id, @RequestBody Course course) {
-        course.setId(id);
-        return courseService.save(course);
-    }
-
-    @GetMapping("/me") // GET (current user)
-    public ResponseEntity<?> getCurrentUser(Authentication authentication) {
+    public Course updateById(@PathVariable Long id, @RequestBody Course courseModified, Authentication authentication) {
         User user = userService.getCurrentUser(authentication);
-        return ResponseEntity.ok(user);
+        Course course = courseService.findById(id);
+
+        if (user.getId() == course.getUser().getId()) {
+            course.setName(courseModified.getName());
+            course.setColor(courseModified.getColor());
+            return courseService.save(course);
+        } else {
+            throw new NotAuthorizedException("Not Authorized to Modify This Course");
+        }
     }
 
     @GetMapping // GET (get a list of courses, by user)
