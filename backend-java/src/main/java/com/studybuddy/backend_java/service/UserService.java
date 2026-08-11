@@ -1,5 +1,6 @@
 package com.studybuddy.backend_java.service;
 
+import com.studybuddy.backend_java.exceptions.ResourceNotFoundException;
 import com.studybuddy.backend_java.exceptions.UserNotFoundException;
 import com.studybuddy.backend_java.model.User;
 import com.studybuddy.backend_java.repository.UserRepository;
@@ -30,7 +31,8 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        return userRepository.findById(id).orElse(null);
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
     public void deleteById(Long id) {

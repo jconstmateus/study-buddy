@@ -1,5 +1,6 @@
 package com.studybuddy.backend_java.service;
 
+import com.studybuddy.backend_java.exceptions.ResourceNotFoundException;
 import com.studybuddy.backend_java.model.Document;
 import com.studybuddy.backend_java.repository.DocumentRepository;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,8 @@ public class DocumentService {
     }
 
     public Document findById(Long id) {
-        return documentRepository.findById(id).orElse(null);
+        return documentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Document not found"));
     }
 
     public void deleteById(Long id) {

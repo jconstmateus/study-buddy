@@ -1,5 +1,6 @@
 package com.studybuddy.backend_java.service;
 
+import com.studybuddy.backend_java.exceptions.ResourceNotFoundException;
 import com.studybuddy.backend_java.model.Question;
 import com.studybuddy.backend_java.repository.QuestionRepository;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,8 @@ public class QuestionService {
     }
 
     public Question findById(Long id) {
-        return questionRepository.findById(id).orElse(null);
+        return questionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Question not found"));
     }
 
     public void deleteById(Long id) {

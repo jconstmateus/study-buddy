@@ -1,5 +1,6 @@
 package com.studybuddy.backend_java.service;
 
+import com.studybuddy.backend_java.exceptions.ResourceNotFoundException;
 import com.studybuddy.backend_java.model.ChatMessage;
 import com.studybuddy.backend_java.repository.ChatMessageRepository;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,8 @@ public class ChatMessageService {
     }
 
     public ChatMessage findById(Long id) {
-        return chatMessageRepository.findById(id).orElse(null);
+        return chatMessageRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Chat message not found"));
     }
 
     public void deleteById(Long id) {

@@ -32,8 +32,15 @@ public class CourseController {
     }
 
     @GetMapping("/{id}") // GET (object by id extracted in the path)
-    public Course findById(@PathVariable Long id) {
-        return courseService.findById(id);
+    public Course findById(@PathVariable Long id, Authentication authentication) {
+        User user = userService.getCurrentUser(authentication);
+        Course course = courseService.findById(id);
+
+        if (user.getId().equals(course.getUser().getId())) {
+            return course;
+        } else {
+            throw new NotAuthorizedException("Not Authorized to View This Course");
+        }
     }
 
     @DeleteMapping("/{id}")
@@ -41,7 +48,7 @@ public class CourseController {
         User user = userService.getCurrentUser(authentication);
         Course course = courseService.findById(id);
 
-        if (user.getId() == course.getUser().getId()) {
+        if (user.getId().equals(course.getUser().getId())) {
             courseService.deleteById(id);
             return ResponseEntity.ok().build();
         } else {
@@ -54,7 +61,7 @@ public class CourseController {
         User user = userService.getCurrentUser(authentication);
         Course course = courseService.findById(id);
 
-        if (user.getId() == course.getUser().getId()) {
+        if (user.getId().equals(course.getUser().getId())) {
             course.setName(courseModified.getName());
             course.setColor(courseModified.getColor());
             return courseService.save(course);

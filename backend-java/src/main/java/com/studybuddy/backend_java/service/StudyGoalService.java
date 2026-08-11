@@ -1,5 +1,6 @@
 package com.studybuddy.backend_java.service;
 
+import com.studybuddy.backend_java.exceptions.ResourceNotFoundException;
 import com.studybuddy.backend_java.model.StudyGoal;
 import com.studybuddy.backend_java.repository.StudyGoalRepository;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,8 @@ public class StudyGoalService {
     }
 
     public StudyGoal findById(Long id) {
-        return studyGoalRepository.findById(id).orElse(null);
+        return studyGoalRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Study goal not found"));
     }
 
     public void deleteById(Long id) {

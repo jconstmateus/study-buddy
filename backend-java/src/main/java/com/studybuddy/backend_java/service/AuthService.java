@@ -4,7 +4,7 @@ import com.studybuddy.backend_java.exceptions.EmailAlreadyExistsException;
 import com.studybuddy.backend_java.exceptions.InvalidCredentialsException;
 import com.studybuddy.backend_java.exceptions.MissingFieldsException;
 import com.studybuddy.backend_java.exceptions.UserNotFoundException;
-import com.studybuddy.backend_java.dto.ChangeResponse;
+import com.studybuddy.backend_java.dto.EmailOrPasswordChangeResponse;
 import com.studybuddy.backend_java.dto.RegisterRequest;
 import com.studybuddy.backend_java.model.User;
 import com.studybuddy.backend_java.repository.UserRepository;
@@ -76,7 +76,7 @@ public class AuthService {
     }
 
     // Change password with encoding method
-    public ChangeResponse changePassword(String email, String newPassword) {
+    public EmailOrPasswordChangeResponse changePassword(String email, String newPassword) {
         User user = userRepository.findByEmail(email);
 
         if (user == null) {
@@ -87,11 +87,11 @@ public class AuthService {
         userRepository.save(user); // Save in DB
 
         // Create response
-        return new ChangeResponse("", "Password changed successfully");
+        return new EmailOrPasswordChangeResponse("", "Password changed successfully");
     }
 
     // Change email and generate new token
-    public ChangeResponse changeEmail(String email, String newEmail) {
+    public EmailOrPasswordChangeResponse changeEmail(String email, String newEmail) {
 
         if (userRepository.findByEmail(newEmail) != null) {
             throw new EmailAlreadyExistsException("Email already registered");
@@ -107,6 +107,6 @@ public class AuthService {
         userRepository.save(user); // Save in DB
 
         // Create response
-        return new ChangeResponse(jwtService.generateToken(newEmail), "Email changed successfully");
+        return new EmailOrPasswordChangeResponse(jwtService.generateToken(newEmail), "Email changed successfully");
     }
 }

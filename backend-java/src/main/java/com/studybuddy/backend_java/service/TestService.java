@@ -1,5 +1,6 @@
 package com.studybuddy.backend_java.service;
 
+import com.studybuddy.backend_java.exceptions.ResourceNotFoundException;
 import com.studybuddy.backend_java.model.Test;
 import com.studybuddy.backend_java.repository.TestRepository;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,8 @@ public class TestService {
     }
 
     public Test findById(Long id) {
-        return testRepository.findById(id).orElse(null);
+        return testRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Test not found"));
     }
 
     public void deleteById(Long id) {

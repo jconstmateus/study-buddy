@@ -25,8 +25,29 @@
   padding: 16px;
   border: 1px solid #e5e5e5;
   border-radius: 12px;
-  background-color: white;
-  transition: transform 0.15s ease;
+  background-color: var(--card-bg);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.course-card-done {
+  opacity: 0.5;
+}
+
+.course-card-overdue {
+  border-color: #dc2626;
+  background-color: #fef2f2;
+}
+
+.event-overdue-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: #dc2626;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
 }
 
 .course-card:hover {
@@ -69,7 +90,7 @@
 }
 
 .add-card {
-  background-color: white;
+  background-color: var(--card-bg);
   border-radius: 12px;
   border: 1px solid #e5e5e5;
   padding: 2.5rem 2rem;
@@ -148,13 +169,13 @@
   gap: 32px;
   padding: 40px;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .course-detail-header {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  grid-template-columns: auto auto;
+  gap: 20px;
   align-items: flex-start;
 }
 
@@ -164,12 +185,13 @@
 
 .course-detail-card {
   position: relative;
-  background-color: white;
+  background-color: var(--card-bg);
   border-radius: 12px;
   border: 1px solid #e5e5e5;
-  padding: 0.5rem 2rem;
-  width: 1000px;
-  min-height: 10px;
+  padding: 0.5rem 1.75rem;
+  min-width: 320px;
+  max-width: 700px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -177,8 +199,8 @@
 
 .course-detail-card h1 {
   margin: 0;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   color: black;
 }
 
@@ -186,9 +208,38 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  padding-right: 90px;
 }
 
 .course-edit-row .course-input {
-  width: 500px;
+  width: 240px;
   margin-bottom: 0;
+}
+
+.event-board {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.event-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.event-type-section h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--brand-teal-dark);
+  margin: 0 0 12px;
+}
+
+.event-empty {
+  color: #9ca3af;
+  font-size: 14px;
 }

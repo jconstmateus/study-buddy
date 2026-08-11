@@ -1,6 +1,6 @@
 package com.studybuddy.backend_java.controller;
 
-import com.studybuddy.backend_java.dto.ChangeResponse;
+import com.studybuddy.backend_java.dto.EmailOrPasswordChangeResponse;
 import com.studybuddy.backend_java.dto.EmailChangeRequest;
 import com.studybuddy.backend_java.dto.LoginRequest;
 import com.studybuddy.backend_java.dto.PassChangeRequest;
@@ -54,7 +54,7 @@ public class AuthController {
         // Verify password first
         authService.verify(authentication.getName(), change.getPassword());
         // Change password
-        ChangeResponse changeResponse = authService.changePassword(authentication.getName(), change.getNewPassword());
+        EmailOrPasswordChangeResponse changeResponse = authService.changePassword(authentication.getName(), change.getNewPassword());
         return ResponseEntity.ok(changeResponse);
     }
 
@@ -64,7 +64,7 @@ public class AuthController {
         // Verify password first
         authService.verify(authentication.getName(), change.getPassword());
         // Change email
-        ChangeResponse changeResponse = authService.changeEmail(authentication.getName(), change.getNewEmail());
+        EmailOrPasswordChangeResponse changeResponse = authService.changeEmail(authentication.getName(), change.getNewEmail());
         return ResponseEntity.ok(changeResponse);
 
     }
