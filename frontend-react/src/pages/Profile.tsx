@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import '../Auth.css';
+import { FaRegUser } from "react-icons/fa";
+import { MdAttachEmail } from "react-icons/md";
 
 function Profile() {
 
@@ -24,7 +26,7 @@ function Profile() {
   const [passwordError, setPasswordError] = useState("");
   const [passwordSuccess, setPasswordSuccess] = useState("");
 
-  // HTTP REQUEST
+
   // LOADING PROFILE INFORMATION - useEffect() load automatically without input
   useEffect(() => {
 
@@ -164,10 +166,16 @@ function Profile() {
 
       {!error && (
         <>
-          <label className="auth-label">Name</label>
+          <div className="profile-label-row">
+            <FaRegUser />
+            <label className="auth-label">Name</label>
+          </div>
           <p>{name}</p>
 
-          <label className="auth-label">Email</label>
+          <div className="profile-label-row">
+            <MdAttachEmail />
+            <label className="auth-label">Email</label>
+          </div>
           <p>{email}</p>
         </>
       )}

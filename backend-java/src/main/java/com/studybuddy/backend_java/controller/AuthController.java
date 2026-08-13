@@ -1,5 +1,11 @@
 package com.studybuddy.backend_java.controller;
 
+import com.studybuddy.backend_java.dto.EmailOrPasswordChangeResponse;
+import com.studybuddy.backend_java.dto.EmailChangeRequest;
+import com.studybuddy.backend_java.dto.LoginRequest;
+import com.studybuddy.backend_java.dto.PassChangeRequest;
+import com.studybuddy.backend_java.dto.RegisterRequest;
+import com.studybuddy.backend_java.dto.UserResponse;
 import com.studybuddy.backend_java.model.*;
 import com.studybuddy.backend_java.service.AuthService;
 import com.studybuddy.backend_java.service.UserService;
@@ -21,76 +27,46 @@ public class AuthController {
 
     // Create new object User, with info from body
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User user) {
-        try {
-            User novoUser = authService.register(user);
-            return ResponseEntity.ok(novoUser);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(409).body(e.getMessage());
-        }
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+
+            User novoUser = authService.register(request);
+            return ResponseEntity.ok(new UserResponse(novoUser));
     }
 
     // Find an already existing User, with info from small class LoginRequest
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        try {
-            String token = authService.login(request.getEmail(), request.getPassword());
-            return ResponseEntity.ok(token);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(401).body(e.getMessage());
-        }
+
+        String token = authService.login(request.getEmail(), request.getPassword());
+        return ResponseEntity.ok(token);
+
     }
 
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(Authentication authentication) {
-        String email = authentication.getName();
-        User user = userService.findByEmail(email);
-
-        if (user == null) {
-            return ResponseEntity.status(404).body("User not found");
-        }
-
-        return ResponseEntity.ok(user);
+        User user = userService.getCurrentUser(authentication);
+        return ResponseEntity.ok(new UserResponse(user));
     }
 
     @PutMapping("/me/change-password")
-    public ResponseEntity<?> setNewPassword(Authentication authentication, @RequestBody PassChange change) {
+    public ResponseEntity<?> setNewPassword(Authentication authentication, @RequestBody PassChangeRequest change) {
 
         // Verify password first
-        try {
-            authService.verify(authentication.getName(), change.getPassword());
-
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(401).body(e.getMessage());
-        }
-
-        try {
-            ChangeResponse changeResponse = authService.changePassword(authentication.getName(), change.getNewPassword());
-            return ResponseEntity.ok(changeResponse);
-
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(409).body(e.getMessage());
-        }
+        authService.verify(authentication.getName(), change.getPassword());
+        // Change password
+        EmailOrPasswordChangeResponse changeResponse = authService.changePassword(authentication.getName(), change.getNewPassword());
+        return ResponseEntity.ok(changeResponse);
     }
 
     @PutMapping("/me/change-email")
-    public ResponseEntity<?> setNewEmail(Authentication authentication, @RequestBody EmailChange change) {
+    public ResponseEntity<?> setNewEmail(Authentication authentication, @RequestBody EmailChangeRequest change) {
 
         // Verify password first
-        try {
-            authService.verify(authentication.getName(), change.getPassword());
+        authService.verify(authentication.getName(), change.getPassword());
+        // Change email
+        EmailOrPasswordChangeResponse changeResponse = authService.changeEmail(authentication.getName(), change.getNewEmail());
+        return ResponseEntity.ok(changeResponse);
 
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(401).body(e.getMessage());
-        }
-
-        try {
-            ChangeResponse changeResponse = authService.changeEmail(authentication.getName(), change.getNewEmail());
-            return ResponseEntity.ok(changeResponse);
-
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(409).body(e.getMessage());
-        }
     }
 }
 

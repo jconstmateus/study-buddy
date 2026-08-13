@@ -1,6 +1,7 @@
 :root {
   --brand-teal: #4f9d93;
   --brand-teal-dark: #3d7d75;
+  --card-bg: #f6faf9;
 }
 
 * {

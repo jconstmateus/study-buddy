@@ -1,6 +1,8 @@
 package com.studybuddy.backend_java.service;
 
+import com.studybuddy.backend_java.exceptions.ResourceNotFoundException;
 import com.studybuddy.backend_java.model.Course;
+import com.studybuddy.backend_java.model.User;
 import com.studybuddy.backend_java.repository.CourseRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,15 +25,16 @@ public class CourseService {
         return courseRepository.save(course);
     }
 
-    public List<Course> findAll() {
-        return courseRepository.findAll();
-    }
-
     public Course findById(Long id) {
-        return courseRepository.findById(id).orElse(null);
+        return courseRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
     }
 
     public void deleteById(Long id) {
         courseRepository.deleteById(id);
+    }
+
+    public List<Course> findByUser(User user) {
+        return courseRepository.findByUser(user);
     }
 }

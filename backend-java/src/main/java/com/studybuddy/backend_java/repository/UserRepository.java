@@ -2,6 +2,7 @@ package com.studybuddy.backend_java.repository;
 
 import com.studybuddy.backend_java.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.Authentication;
 
 // Extend base interface, associate with Entity and PK
 public interface UserRepository extends JpaRepository<User, Long> {
