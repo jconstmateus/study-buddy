@@ -27,7 +27,7 @@ This project is being built as a full-stack learning journey and portfolio piece
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 
 **Planned**
-![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white) — AI microservice (summaries, tutor chatbot, practice tests)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white) - AI microservice (summaries, tutor chatbot, practice tests)
 
 ## Features
 
