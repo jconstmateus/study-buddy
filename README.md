@@ -40,6 +40,19 @@ This project is being built as a full-stack learning journey and portfolio piece
 - **Authorization** - every write operation verifies resource ownership before allowing changes; no user can modify another user's data
 - **Centralized error handling** - consistent, typed exceptions mapped to appropriate HTTP status codes across the entire API
 
+## Media
+
+<div align="center">
+  <img src="<img width="1901" height="1022" alt="Login-Register" src="https://github.com/user-attachments/assets/7638c395-6702-4dfe-84b5-7d45b676cf06" />
+" width="45%" alt="Login page" />
+  <img src="URL_DASHBOARD" width="45%" alt="Dashboard calendar" />
+</div>
+
+<div align="center">
+  <img src="URL_LOGIN" width="45%" alt="Login page" />
+  <img src="URL_DASHBOARD" width="45%" alt="Dashboard calendar" />
+</div>
+
 ### Planned
 
 - AI microservice (Python/FastAPI): automatic summaries, AI tutor chatbot, auto-generated practice tests
