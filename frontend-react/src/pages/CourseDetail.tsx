@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import '../components/Courses.css'
 import { FaBook, FaPen, FaGraduationCap, FaTasks, FaBullseye, FaRegTrashAlt } from "react-icons/fa";
 import type { IconType } from "react-icons";
@@ -34,6 +34,7 @@ const EVENT_STATUS_CONFIG: { status: EventStatus; icon: IconType }[] = [
 function CourseDetail() {
 
     const { id } = useParams();
+    const navigate = useNavigate();
     const[nameCourse, setNameCourse] = useState("");
     const[colorCourse, setColorCourse] = useState("");
     const [error, setError] = useState("");
@@ -64,6 +65,9 @@ function CourseDetail() {
             const result = await request.json()
             setNameCourse(result.name);
             setColorCourse(result.color);
+        } else if (request.status === 401) {
+            localStorage.removeItem("token");
+            navigate("/");
         } else {
              setError(await request.text());
         }
@@ -80,7 +84,7 @@ function CourseDetail() {
        const token = localStorage.getItem("token");
 
        try {
-        const request = await fetch(`http://localhost:8080/events/${id}`, {
+        const request = await fetch(`http://localhost:8080/courses/${id}/events`, {
           method: "GET",
           headers: { "Authorization": "Bearer " + token }
         });
@@ -88,7 +92,10 @@ function CourseDetail() {
         if (request.ok) {
           const result = await request.json();
           setEvents(result); // Receive a list of Events
-            
+
+        } else if (request.status === 401) {
+            localStorage.removeItem("token");
+            navigate("/");
         } else {
              setError(await request.text());
         }
@@ -130,6 +137,9 @@ function CourseDetail() {
                 setNameCourse(result.name);
                 setColorCourse(result.color);
                 setEditing(false);
+            } else if (request.status === 401) {
+                localStorage.removeItem("token");
+                navigate("/");
             } else {
                 setError(await request.text());
             }
@@ -146,7 +156,7 @@ function CourseDetail() {
         const token = localStorage.getItem("token");
 
         try {
-            const request = await fetch(`http://localhost:8080/events/by-course/${id}`, {
+            const request = await fetch(`http://localhost:8080/courses/${id}/events`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -167,6 +177,9 @@ function CourseDetail() {
                 setTitleEvent("");
                 setTypeEvent("");
                 setDateEvent("");
+            } else if (request.status === 401) {
+                localStorage.removeItem("token");
+                navigate("/");
             } else {
                 setError(await request.text());
             }
@@ -201,6 +214,9 @@ function CourseDetail() {
       e.id === eventId ? { ...e, eventStatus: result as EventStatus } : e
     ));
 
+    } else if (request.status === 401) {
+      localStorage.removeItem("token");
+      navigate("/");
     } else {
       setError(await request.text());
     }
@@ -228,6 +244,9 @@ function CourseDetail() {
 
       setEvents(events.filter((event) => event.id !== eventId)); // Remove course from the list
 
+    } else if (request.status === 401) {
+      localStorage.removeItem("token");
+      navigate("/");
     } else {
       setError(await request.text());
     }

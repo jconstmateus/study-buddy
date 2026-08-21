@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../components/Courses.css'
 import { FaBook, FaRegTrashAlt } from "react-icons/fa";
 
@@ -11,6 +11,7 @@ interface Course {
 }
 
 function Courses() {
+  const navigate = useNavigate();
   const [courses, setCourses] = useState<Course[]>([]); // List of Course defined previously, start empty
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
@@ -33,6 +34,9 @@ function Courses() {
         if (request.ok) {
           const result = await request.json();
           setCourses(result); // Receive a list of Courses
+        } else if (request.status === 401) {
+          localStorage.removeItem("token");
+          navigate("/");
         } else {
           setError(await request.text());
         }
@@ -98,6 +102,9 @@ function Courses() {
 
       if (request.ok) {
         setCourses(courses.filter((course) => course.id !== id)); // Remove course from the list
+      } else if (request.status === 401) {
+        localStorage.removeItem("token");
+        navigate("/");
       } else {
         setError(await request.text());
       }
@@ -146,7 +153,7 @@ return (
         <div key={course.id} className="course-card">
           <FaBook style={{ color: course.color }} />
           <span style = {{cursor: "pointer"}}>
-            <Link to={`/course/${course.id}`}>
+            <Link to={`/courses/${course.id}`}>
             {course.name}
             </Link>
           </span>

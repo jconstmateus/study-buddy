@@ -3,6 +3,7 @@ package com.studybuddy.backend_java.service;
 import com.studybuddy.backend_java.exceptions.ResourceNotFoundException;
 import com.studybuddy.backend_java.model.Course;
 import com.studybuddy.backend_java.model.Event;
+import com.studybuddy.backend_java.model.User;
 import com.studybuddy.backend_java.repository.EventRepository;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +37,9 @@ public class EventService {
     public Event findById(Long id) {
         return eventRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Event not found"));
+    }
+
+    public List<Event> findByCourseUser(User user) {
+        return eventRepository.findByCourseUser(user);
     }
 }
