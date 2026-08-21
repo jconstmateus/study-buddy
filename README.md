@@ -42,15 +42,38 @@ This project is being built as a full-stack learning journey and portfolio piece
 
 ## Media
 
-<div align="center">
-  <img src="<img width="1901" height="1022" alt="Login-Register" src="https://github.com/user-attachments/assets/7638c395-6702-4dfe-84b5-7d45b676cf06" />
-" width="45%" alt="Login page" />
-  <img src="URL_DASHBOARD" width="45%" alt="Dashboard calendar" />
+<div>
+<table align="center" width="100%">
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/7638c395-6702-4dfe-84b5-7d45b676cf06" width="500"/>
+      <br/>
+      <em>Login & Register</em>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/d7a1d24a-6603-42b7-aad8-7f7208a1c1b6" width="500"/>
+      <br/>
+      <em>Profile page</em>
+    </td>
+  </tr>
+</table>
 </div>
 
-<div align="center">
-  <img src="URL_LOGIN" width="45%" alt="Login page" />
-  <img src="URL_DASHBOARD" width="45%" alt="Dashboard calendar" />
+<div>
+<table align="center" width="100%">
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/0c00ba4d-3470-49d0-b78c-cfef21b817ba" width="500"/>
+      <br/>
+      <em>Courses page</em>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/c58ff5ea-0c29-4678-9509-3aeec3ece625" width="500"/>
+      <br/>
+      <em>Events page</em>
+    </td>
+  </tr>
+</table>
 </div>
 
 ### Planned
