@@ -76,6 +76,19 @@ This project is being built as a full-stack learning journey and portfolio piece
 </table>
 </div>
 
+<div>
+<table align="center" width="100%">
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/75ca5263-0447-4391-a4de-eea21512f228"  width="500"/>
+      <br/>
+      <em>Dashboard page</em>
+    </td>
+
+  </tr>
+</table>
+</div>
+
 ### Planned
 
 - AI microservice (Python/FastAPI): automatic summaries, AI tutor chatbot, auto-generated practice tests
