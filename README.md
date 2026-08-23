@@ -84,7 +84,11 @@ This project is being built as a full-stack learning journey and portfolio piece
       <br/>
       <em>Dashboard page</em>
     </td>
-
+     <td align="center">
+      <img src="https://github.com/user-attachments/assets/818fa52b-307d-4af8-83e8-d8bb73c05d00" width="500"/>
+      <br/>
+      <em>Study Goals page</em>
+    </td>
   </tr>
 </table>
 </div>
