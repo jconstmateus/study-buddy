@@ -117,12 +117,13 @@ function Courses() {
   }
 
 return (
-  <div className="courses-page">
+  <div className="courses-list-page">
+    <h1 className="courses-title">My Courses</h1>
+    {error && <p className="auth-error">{error}</p>}
 
+    <div className="courses-page">
     <div className="add-card">
-      <h1>My Courses</h1>
-
-      {error && <p className="auth-error">{error}</p>}
+      <h1>Add Course</h1>
 
       <form onSubmit={handleAdd}>
         <input
@@ -169,6 +170,7 @@ return (
       ))}
     </div>
 
+    </div>
   </div>
 );
 }

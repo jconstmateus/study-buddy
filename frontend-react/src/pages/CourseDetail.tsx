@@ -25,12 +25,6 @@ const EVENT_TYPE_CONFIG: { type: EventType; label: string; icon: IconType }[] = 
   { type: "STUDY_GOAL", label: "Study Goals", icon: FaBullseye },
 ];
 
-// One icon per status 
-const EVENT_STATUS_CONFIG: { status: EventStatus; icon: IconType }[] = [
-  { status: "TODO", icon: MdCheckBoxOutlineBlank },
-  { status: "DONE", icon: MdCheckBox },
-];
-
 function CourseDetail() {
 
     const { id } = useParams();
@@ -45,7 +39,7 @@ function CourseDetail() {
     // Param. to create new event
     const[titleEvent, setTitleEvent] = useState("");
     const[typeEvent, setTypeEvent] = useState<EventType | "">("");
-    const[statusEvent, setEventStatus] = useState<EventStatus>("TODO");
+    const[statusEvent] = useState<EventStatus>("TODO");
     const[dateEvent, setDateEvent] = useState("");
     const [addEventSubmitting, setAddEventSubmitting] = useState(false);
 
@@ -166,7 +160,6 @@ function CourseDetail() {
                     title: titleEvent,
                     eventType: typeEvent,
                     eventStatus: statusEvent,
-                    // EXAM already carries a time (datetime-local); other types are date-only, default to end of day
                     date: typeEvent === "EXAM" ? dateEvent : `${dateEvent}T23:59`
                 })
             });

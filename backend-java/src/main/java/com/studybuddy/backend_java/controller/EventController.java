@@ -4,6 +4,7 @@ import com.studybuddy.backend_java.dto.StatusChangeRequest;
 import com.studybuddy.backend_java.exceptions.NotAuthorizedException;
 import com.studybuddy.backend_java.model.Course;
 import com.studybuddy.backend_java.model.Event;
+import com.studybuddy.backend_java.model.EventType;
 import com.studybuddy.backend_java.model.User;
 import com.studybuddy.backend_java.service.EventService;
 import com.studybuddy.backend_java.service.UserService;
@@ -55,9 +56,14 @@ public class EventController {
         }
     }
 
-    @GetMapping // GET (list of all events)
-    public List<Event> findAllEvents(Authentication authentication) {
+    @GetMapping // GET (list of all events, optionally filtered by type)
+    public List<Event> findAllEvents(@RequestParam(required = false) EventType type, Authentication authentication) {
         User user = userService.getCurrentUser(authentication);
+
+        if (type != null) {
+            return eventService.findByCourseUserAndEventType(user, type);
+        }
+
         return eventService.findByCourseUser(user);
     }
 

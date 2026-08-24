@@ -6,6 +6,7 @@ import Courses from './pages/Courses';
 import CourseDetail from './pages/CourseDetail';
 import About from './pages/About';
 import Tutorial from './pages/Tutorial';
+import StudyGoals from './pages/StudyGoals';
 import AppLayout from './components/AppLayout';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/tutorial" element={<Tutorial />} />
         <Route path="/courses/:id" element={<CourseDetail />} />
+        <Route path="/study-goals" element={<StudyGoals />} />
       </Route>
     </Routes>
   );

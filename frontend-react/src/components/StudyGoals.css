@@ -1,0 +1,64 @@
+.study-goals-page {
+  padding: 40px;
+}
+
+.study-goals-title {
+  margin: 0 0 24px;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--brand-teal-dark);
+}
+
+.study-goals-filters {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.study-goals-filter {
+  background-color: var(--card-bg);
+  border-color: var(--brand-teal);
+  margin-bottom: 0;
+  width: auto;
+}
+
+.status-filter-group {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.status-filter-button {
+  color: #374151;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.status-filter-button:not(:first-child) {
+  border-left: none;
+}
+
+.status-filter-button:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.status-filter-button:last-child {
+  border-radius: 0 8px 8px 0;
+}
+
+.status-filter-button:hover {
+  background-color: rgba(79, 157, 147, 0.15);
+  border-color: var(--brand-teal);
+}
+
+.status-filter-button-active,
+.status-filter-button-active:hover {
+  background-color: var(--brand-teal);
+  border-color: var(--brand-teal);
+  color: #fff;
+}
