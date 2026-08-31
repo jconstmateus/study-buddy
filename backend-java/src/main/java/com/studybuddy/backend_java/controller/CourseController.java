@@ -1,11 +1,10 @@
 package com.studybuddy.backend_java.controller;
 
 import com.studybuddy.backend_java.exceptions.NotAuthorizedException;
-import com.studybuddy.backend_java.model.Course;
-import com.studybuddy.backend_java.model.Event;
-import com.studybuddy.backend_java.model.User;
+import com.studybuddy.backend_java.model.*;
 import com.studybuddy.backend_java.service.CourseService;
 import com.studybuddy.backend_java.service.EventService;
+import com.studybuddy.backend_java.service.StudyGoalService;
 import com.studybuddy.backend_java.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -21,11 +20,14 @@ public class CourseController {
     private final CourseService courseService;
     private final UserService userService;
     private final EventService eventService;
+    private final StudyGoalService studyGoalService ;
 
-    public CourseController(CourseService courseService, UserService userService, EventService eventService) {
+    public CourseController(CourseService courseService, UserService userService,
+                            EventService eventService, StudyGoalService studyGoalService) {
         this.courseService = courseService;
         this.userService = userService;
         this.eventService = eventService;
+        this.studyGoalService = studyGoalService;
     }
 
     @PostMapping
@@ -100,7 +102,15 @@ public class CourseController {
 
         if (user.getId().equals(course.getUser().getId())) {
             event.setCourse(course);
-            return eventService.save(event);
+            Event newEvent = eventService.save(event);
+
+            if (event.getEventType() == EventType.STUDY_GOAL) {
+                StudyGoal newStudyGoal = new StudyGoal();
+                newStudyGoal.setEvent(newEvent);
+                studyGoalService.save(newStudyGoal);
+            }
+            return newEvent;
+
         } else {
             throw new NotAuthorizedException("Not Authorized to Add Events to This Course");
         }

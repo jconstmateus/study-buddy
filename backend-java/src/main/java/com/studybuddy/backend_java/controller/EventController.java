@@ -41,6 +41,19 @@ public class EventController {
         }
     }
 
+    @GetMapping("/{id}") // GET (object by id extracted in the path)
+    public Event findById(@PathVariable Long id, Authentication authentication) {
+        User user = userService.getCurrentUser(authentication);
+        Event event = eventService.findById(id);
+
+        if (user.getId().equals(event.getCourse().getUser().getId())) {
+            return event;
+
+        } else {
+            throw new NotAuthorizedException("Not Authorized to Read This Event");
+        }
+    }
+
     @PutMapping("/{id}") // PUT (update object by id, with new data on Body)
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody StatusChangeRequest newEventStatus, Authentication authentication) {
         User user = userService.getCurrentUser(authentication);

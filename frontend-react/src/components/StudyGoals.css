@@ -62,3 +62,163 @@
   border-color: var(--brand-teal);
   color: #fff;
 }
+
+.studygoal-detail-page {
+  display: flex;
+  gap: 32px;
+  padding: 40px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Header row: back button + study goal title, mirrors .course-detail-header */
+.studygoal-detail-header {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 20px;
+  align-items: center;
+}
+
+.studygoal-detail-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--brand-teal-dark);
+}
+
+.studygoal-detail-header svg {
+  font-size: 22px;
+}
+
+/* Section heading above the AI summary */
+.studygoal-summary-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--brand-teal-dark);
+}
+
+/* Wrapper for a tab's content: stacks the cards and centers them on the page */
+.studygoal-tab-panel {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Card that holds the rendered Markdown summary */
+.studygoal-summary-card {
+  align-self: center;
+  width: 100%;
+  background-color: var(--card-bg);
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 1.75rem 2.25rem;
+  max-width: 960px;
+  line-height: 1.6;
+  font-size: 14px;
+  color: #374151;
+}
+
+.studygoal-summary-card :first-child {
+  margin-top: 0;
+}
+
+.studygoal-summary-card :last-child {
+  margin-bottom: 0;
+}
+
+/* Wide math blocks scroll instead of stretching the card */
+.studygoal-summary-card .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px 0;
+}
+
+.studygoal-summary-empty {
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+/* The form: stacks the textarea and the button */
+.studygoal-context-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* The textarea itself */
+.studygoal-context-input {
+  width: 100%;
+  min-height: 90px;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font: inherit;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.studygoal-context-input:focus {
+  outline: none;
+  border-color: var(--brand-teal);
+}
+
+.studygoal-context-form .course-button {
+  width: auto;
+  margin-top: 0;
+}
+
+.studygoal-generating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.loader {
+  --color-1: #3d7d75;
+  --color-2: #97C7C1;
+  --size: 1.3px;
+
+  width: calc(64 * var(--size));
+  height: calc(64 * var(--size));
+  position: relative;
+  animation: rotate 1.5s ease-in infinite alternate;
+}
+.loader::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  color: var(--color-1);
+  background: currentColor;
+  width: calc(64 * var(--size));
+  height: calc(32 * var(--size));
+  border-radius: 0 0 calc(50 * var(--size)) calc(50 * var(--size));
+}
+.loader::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  background: var(--color-2);
+  width: calc(8 * var(--size));
+  height: calc(64 * var(--size));
+  animation: rotate 1.2s linear infinite alternate-reverse;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}

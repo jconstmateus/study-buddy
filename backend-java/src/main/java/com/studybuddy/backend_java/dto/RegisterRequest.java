@@ -2,7 +2,7 @@ package com.studybuddy.backend_java.dto;
 
 public class RegisterRequest {
 
-    // Only what's needed to create a new User — no id, no createdAt
+    // Only what's needed to create a new User, no id, no createdAt
     private String name;
     private String email;
     private String password;

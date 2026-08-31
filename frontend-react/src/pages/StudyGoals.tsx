@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../components/Courses.css";
 import "../components/StudyGoals.css";
 import { FaBullseye, FaRegTrashAlt } from "react-icons/fa";
@@ -322,13 +322,16 @@ return (
               
               //* Presentation of the events accordingly
               return (
+        
                 <div
                   key={event.id}
                   className={`course-card ${event.eventStatus === "DONE" ? "course-card-done" : ""} ${isOverdue ? "course-card-overdue" : ""}`}
                 >
                   {isOverdue && <span className="event-overdue-badge">Overdue</span>}
                   <FaBullseye style={{ color: event.course.color }} />
+                  <Link to={`/study-goals/${event.id}`}>
                   <span>{event.title}</span>
+                   </Link>
                   <span>{event.course.name}</span>
                   <span
                     onClick={() => handleChangeStatus(event.id, event.eventStatus === "DONE" ? "TODO" : "DONE")}
@@ -341,6 +344,7 @@ return (
                     <FaRegTrashAlt />
                   </div>
                 </div>
+         
               );
             })
           )}

@@ -22,11 +22,6 @@ public class StudyGoalController {
         return studyGoalService.save(studyGoal);
     }
 
-    @GetMapping // GET (get a list of objects)
-    public List<StudyGoal> findAll() {
-        return studyGoalService.findAll();
-    }
-
     @GetMapping("/{id}") // GET (object by id extracted in the path)
     public StudyGoal findById(@PathVariable Long id) {
         return studyGoalService.findById(id);

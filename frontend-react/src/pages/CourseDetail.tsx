@@ -379,7 +379,9 @@ function CourseDetail() {
                     >
                       {isOverdue && <span className="event-overdue-badge">Overdue</span>}
                       <Icon style={{ color: colorCourse }} />
+                      <Link to={`/study-goals/${event.id}`}>
                       <span>{event.title}</span>
+                      </Link>
                       <span onClick={() => handleChangeStatus(event.id, event.eventStatus === "DONE" ? "TODO" : "DONE")} style={{ cursor: "pointer" }}>
                       {event.eventStatus === "DONE" ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
                       </span>
