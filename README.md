@@ -93,11 +93,45 @@ This project is being built as a full-stack learning journey and portfolio piece
 </table>
 </div>
 
-### Planned
+<h4 align="center"> AI integration </h4>
+<div>
+<table align="center" width="100%">
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/d479325b-9349-4b04-ae9d-a57314dd681c"  width="500"/>
+      <br/>
+      <em>Summary automade with AI</em>
+    </td>
+     <td align="center">
+      <img src="https://github.com/user-attachments/assets/2768248c-fc5a-4fee-abca-81e5ce811dd0" width="500"/>
+      <br/>
+      <em>Form to add context/information</em>
+    </td>
+  </tr>
+</table>
+</div>
+
+<div>
+<table align="center" width="100%">
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/65b7de90-4fa2-44b2-ad39-03286bb37bc9" width="500"/>
+      <br/>
+      <em>Loading new summary with added context</em>
+    </td>
+     <td align="center">
+      <img src="https://github.com/user-attachments/assets/2768248c-fc5a-4fee-abca-81e5ce811dd0" width="500"/>
+      <br/>
+      <em>Form to add context/information</em>
+    </td>
+  </tr>
+</table>
+</div>
+
+
+### Ongoing...
 
 - AI microservice (Python/FastAPI): automatic summaries, AI tutor chatbot, auto-generated practice tests
-- Unified dashboard aggregating events across all courses
-- Smart syllabus input (text or photo to automatic calendar events)
 - Production deployment (environment variables, HTTPS, persistent JWT secret)
 
 ## Architecture
