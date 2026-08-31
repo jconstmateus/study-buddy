@@ -119,12 +119,6 @@ This project is being built as a full-stack learning journey and portfolio piece
       <br/>
       <em>Loading new summary with added context</em>
     </td>
-     <td align="center">
-      <img src="https://github.com/user-attachments/assets/2768248c-fc5a-4fee-abca-81e5ce811dd0" width="500"/>
-      <br/>
-      <em>Form to add context/information</em>
-    </td>
-  </tr>
 </table>
 </div>
 
