@@ -119,9 +119,24 @@ This project is being built as a full-stack learning journey and portfolio piece
       <br/>
       <em>Loading new summary with added context</em>
     </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/a60c439d-be0f-43f5-b09a-0f2c1b65a1fc" width="500"/>
+      <br/>
+      <em>AI tutor chatbot</em>
+    </td>
 </table>
 </div>
 
+<div>
+<table align="center" width="100%">
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/14b2034d-aac4-456d-a76d-cbbe5f6b24ad" width="500"/>
+      <br/>
+      <em>Response made with conversation history and system prompt</em>
+    </td>
+</table>
+</div>
 
 ### Ongoing...
 
