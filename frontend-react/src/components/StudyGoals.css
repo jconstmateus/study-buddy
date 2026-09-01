@@ -185,7 +185,147 @@
   font-size: 14px;
 }
 
-.loader {
+/* ---------- Chat tab ---------- */
+
+.studygoal-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 60vh;
+  max-height: 600px;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 4px;
+}
+
+/* A message line: avatar + bubble */
+.chat-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  max-width: 85%;
+}
+
+.chat-row-ai {
+  align-self: flex-start;
+}
+
+.chat-row-user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.chat-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* User icon: smaller, teal, no photo background */
+.chat-avatar-user {
+  width: 30px;
+  height: 30px;
+  color: var(--brand-teal);
+}
+
+.chat-bubble {
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* User messages: plain text, keep the typed line breaks */
+.chat-row-user .chat-bubble {
+  white-space: pre-wrap;
+  background-color: var(--brand-teal);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-row-ai .chat-bubble {
+  background-color: #fff;
+  color: #374151;
+  border: 1px solid #e5e5e5;
+  border-bottom-left-radius: 4px;
+}
+
+/* AI messages are rendered Markdown: trim the outer block margins */
+.chat-row-ai .chat-bubble > :first-child { margin-top: 0; }
+.chat-row-ai .chat-bubble > :last-child { margin-bottom: 0; }
+
+.chat-row-ai .chat-bubble .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* Markdown tables (summary card + AI chat bubbles) */
+.studygoal-summary-card table,
+.chat-row-ai .chat-bubble table {
+  border-collapse: collapse;
+  margin: 8px 0;
+  font-size: 13px;
+  display: block;
+  overflow-x: auto;
+}
+
+.studygoal-summary-card th,
+.studygoal-summary-card td,
+.chat-row-ai .chat-bubble th,
+.chat-row-ai .chat-bubble td {
+  border: 1px solid #d1d5db;
+  padding: 6px 10px;
+  text-align: left;
+}
+
+.studygoal-summary-card th,
+.chat-row-ai .chat-bubble th {
+  font-weight: 600;
+}
+
+/* Input row pinned under the message list */
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  border-top: 1px solid #e5e5e5;
+  padding-top: 12px;
+}
+
+.chat-input {
+  flex: 1;
+  min-height: 40px;
+  max-height: 120px;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font: inherit;
+  line-height: 1.4;
+  resize: vertical;
+}
+
+.chat-input:focus {
+  outline: none;
+  border-color: var(--brand-teal);
+}
+
+.chat-input-row .course-button {
+  width: auto;
+  margin-top: 0;
+  flex-shrink: 0;
+}
+
+.loader-summary {
   --color-1: #3d7d75;
   --color-2: #97C7C1;
   --size: 1.3px;
@@ -195,7 +335,7 @@
   position: relative;
   animation: rotate 1.5s ease-in infinite alternate;
 }
-.loader::before {
+.loader-summary::before {
   content: '';
   position: absolute;
   left: 0;
@@ -206,7 +346,7 @@
   height: calc(32 * var(--size));
   border-radius: 0 0 calc(50 * var(--size)) calc(50 * var(--size));
 }
-.loader::after {
+.loader-summary::after {
   content: '';
   position: absolute;
   left: 50%;
@@ -222,3 +362,55 @@
     transform: rotate(360deg);
   }
 }
+
+/* The "typing" bubble needs room for the dot spread */
+.chat-bubble-typing {
+  min-width: 116px;
+}
+
+.loader-chat {
+  --color-1: #3d7d75;
+  --size: 1px;
+
+  width: calc(12 * var(--size));
+  height: calc(12 * var(--size));
+  border-radius: 50%;
+  display: block;
+  margin: calc(15 * var(--size)) auto;
+  position: relative;
+  color: var(--color-1);
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite alternate;
+}
+
+@keyframes animloader {
+  0% {
+    box-shadow:
+      calc(-38 * var(--size)) calc(-12 * var(--size)),
+      calc(-14 * var(--size)) 0,
+      calc(14 * var(--size)) 0,
+      calc(38 * var(--size)) 0;
+  }
+  33% {
+    box-shadow:
+      calc(-38 * var(--size)) 0,
+      calc(-14 * var(--size)) calc(-12 * var(--size)),
+      calc(14 * var(--size)) 0,
+      calc(38 * var(--size)) 0;
+  }
+  66% {
+    box-shadow:
+      calc(-38 * var(--size)) 0,
+      calc(-14 * var(--size)) 0,
+      calc(14 * var(--size)) calc(-12 * var(--size)),
+      calc(38 * var(--size)) 0;
+  }
+  100% {
+    box-shadow:
+      calc(-38 * var(--size)) 0,
+      calc(-14 * var(--size)) 0,
+      calc(14 * var(--size)) 0,
+      calc(38 * var(--size)) calc(-12 * var(--size));
+  }
+}
+

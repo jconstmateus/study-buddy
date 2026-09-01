@@ -31,3 +31,33 @@ def summarize(data: dict):
      
     # Return first and only message
     return message.content[0].text
+
+
+    # POST (create a response with chat and summary)
+@app.post("/new-message", response_class=PlainTextResponse)
+def new_message(data: dict):
+    summary = data.get("summary", "")
+    chat = data.get("chat", [])
+
+    messages = []
+    
+    for m in chat:
+
+        if m["author"] == "USER":
+            role = "user"
+        else:
+            role = "assistant"
+        
+        messages.append({"role": role, "content": m["text"]})
+
+    message = client.messages.create(
+        model="claude-haiku-4-5-20251001",
+        max_tokens=500,
+        system=(
+            "You are helping a student study. Here is the topic summary for context:\n\n"
+            f"{summary}\n\n"
+            "Now, answer their questions clearly, informatively and concisely."
+        ),
+        messages=messages,
+    )
+    return message.content[0].text

@@ -1,10 +1,12 @@
 package com.studybuddy.backend_java.service;
 
+import com.studybuddy.backend_java.model.ChatMessage;
 import com.studybuddy.backend_java.model.Question;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +23,24 @@ public class AiService {
                 .retrieve()
                 .body(String.class);
     }
+
+
+    // POST - generate a response with a new message
+    public String createResponse(String summary, List<ChatMessage> chat) {
+
+        // Give the AI service only the information needed (faster and protect password)
+        List<Map<String, String>> lines = new ArrayList<>();
+        for (ChatMessage m: chat) {
+            lines.add(Map.of("author", m.getAuthor().name(), "text", m.getText() ));
+        }
+
+        return restClient.post()
+                .uri("/new-message")
+                .body(Map.of("summary", summary != null ? summary : "", "chat", lines))
+                .retrieve()
+                .body(String.class);
+    }
+
 
     // GET - generate a quiz with summary and given examples
     public List<Question> generateQuizz(String summary, String examples) {
