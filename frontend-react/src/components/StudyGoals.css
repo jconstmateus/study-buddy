@@ -414,3 +414,9 @@
   }
 }
 
+.chat-answer {
+  width: 90px;
+  height: 70px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}

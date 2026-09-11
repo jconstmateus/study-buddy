@@ -39,6 +39,11 @@ public class StudyGoalService {
                 .orElseThrow(() -> new ResourceNotFoundException("Study goal not found"));
     }
 
+    public StudyGoal findByEventForUpdate(Event event) {
+        return studyGoalRepository.findByEventForUpdate(event)
+                .orElseThrow(() -> new ResourceNotFoundException("Study goal not found"));
+    }
+
     public void deleteById(Long id) {
         studyGoalRepository.deleteById(id);
     }

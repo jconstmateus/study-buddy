@@ -2,6 +2,7 @@ package com.studybuddy.backend_java.service;
 
 import com.studybuddy.backend_java.model.ChatMessage;
 import com.studybuddy.backend_java.model.Question;
+import com.studybuddy.backend_java.model.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -42,12 +43,28 @@ public class AiService {
     }
 
 
-    // GET - generate a quiz with summary and given examples
-    public List<Question> generateQuizz(String summary, String examples) {
-        return restClient.post()
-                .uri("/generate-quizz")
-                .body(Map.of("summary", summary, "context", examples))
+    // POST - generate questions for quizz with IA, and correct it into complete List<Question>
+    public List<Question> generateQuestionsForQuizz(Test test) {
+        String summary = test.getStudyGoal().getSummary();
+
+        // The quiz is built from the summary; without it there is nothing to ask about
+        // (also: Map.of does not allow null values and would throw NullPointerException)
+        if (summary == null || summary.isBlank()) {
+            throw new IllegalStateException("Cannot generate a quiz: this study goal has no summary yet.");
+        }
+
+        List<Question> questions = restClient.post()
+                .uri("/generate-questions")
+                .body(Map.of("summary", summary))
                 .retrieve()
-                .body(new ParameterizedTypeReference<List<Question>>() {});
+                .body(new ParameterizedTypeReference<List<Question>>() {}); // Return a list of Questions
+
+        if (questions != null) {
+            for (Question q: questions) {
+                q.setTest(test);
+            }
+        }
+
+        return questions;
     }
 }

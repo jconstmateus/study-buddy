@@ -2,6 +2,7 @@ package com.studybuddy.backend_java.service;
 
 import com.studybuddy.backend_java.exceptions.ResourceNotFoundException;
 import com.studybuddy.backend_java.model.Test;
+import com.studybuddy.backend_java.model.StudyGoal;
 import com.studybuddy.backend_java.repository.TestRepository;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +36,10 @@ public class TestService {
 
     public void deleteById(Long id) {
         testRepository.deleteById(id);
+    }
+
+    public Test findLatestByStudyGoal(StudyGoal studyGoal) {
+        return testRepository.findFirstByStudyGoalOrderByCreatedAtDesc(studyGoal);
+
     }
 }

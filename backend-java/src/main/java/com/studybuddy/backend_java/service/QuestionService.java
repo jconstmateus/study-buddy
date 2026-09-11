@@ -2,6 +2,7 @@ package com.studybuddy.backend_java.service;
 
 import com.studybuddy.backend_java.exceptions.ResourceNotFoundException;
 import com.studybuddy.backend_java.model.Question;
+import com.studybuddy.backend_java.model.Test;
 import com.studybuddy.backend_java.repository.QuestionRepository;
 import org.springframework.stereotype.Service;
 
@@ -36,4 +37,13 @@ public class QuestionService {
     public void deleteById(Long id) {
         questionRepository.deleteById(id);
     }
+
+    public List<Question> findByTest(Test test) {
+        return questionRepository.findByTest(test);
+    }
+
+    public List<Question> saveAll(List<Question> newQuestions) {
+        return questionRepository.saveAll(newQuestions);
+    }
+
 }

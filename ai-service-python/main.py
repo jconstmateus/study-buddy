@@ -1,7 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import PlainTextResponse
 from anthropic import Anthropic
 from dotenv import load_dotenv
+import json
 import os
 
 load_dotenv() # Load virtual variables
@@ -16,14 +17,14 @@ def summarize(data: dict):
     context = data.get("context", "")
     summary = data.get("summary", "")
 
-    prompt = f"Explain the topic '{title}' in a clear, informative and concise way for a student. Give example. Be cautious of the limit of tokens (500)"
+    prompt = f"Explain the topic '{title}' in a clear, informative and concise way for a student. Give example. Be cautious of the limit of tokens (700)"
     if context:
         prompt += f" Remake the actual summary: {summary}; with additional context to focus on: {context}"
 
     # Create message
     message = client.messages.create(
         model="claude-haiku-4-5-20251001",
-        max_tokens=500,
+        max_tokens=1000,
         messages=[
             {"role": "user", "content": prompt}
         ]
@@ -33,7 +34,7 @@ def summarize(data: dict):
     return message.content[0].text
 
 
-    # POST (create a response with chat and summary)
+# POST (create a response with chat and summary)
 @app.post("/new-message", response_class=PlainTextResponse)
 def new_message(data: dict):
     summary = data.get("summary", "")
@@ -61,3 +62,61 @@ def new_message(data: dict):
         messages=messages,
     )
     return message.content[0].text
+
+
+# POST (create new questions for a quizz)
+@app.post("/generate-questions") 
+def generateQuestions(data: dict):
+    summary = data.get("summary", "")
+
+    message = client.messages.create(
+        model="claude-haiku-4-5-20251001",
+        max_tokens=1500,
+        system=(
+            "You are creating a quiz based on this summary:\n\n"
+            f"{summary}\n\n"
+            "options must be a single string with the 4 choices separated by ', '.\n"
+            "correctAnswer must be exactly equal to one of those 4 choices."
+        ),
+        messages=[
+            {"role": "user", "content": "Generate a quiz with 5 questions, each should have ONLY 4 options each and ONLY ONE must be a correct answer."}],
+        output_config={ # Create a fixed schema to return
+            "format": {
+                "type": "json_schema",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "questions": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "statement": {"type": "string"},
+                                    "options": {"type": "string"},
+                                    "correctAnswer": {"type": "string"}
+                                },
+                                "required": ["statement", "options", "correctAnswer"],
+                                "additionalProperties": False
+                            }
+                        }
+                    },
+                    "required": ["questions"],
+                    "additionalProperties": False
+                }
+            }
+        }
+    )
+
+    text = message.content[0].text
+    try:
+        result = json.loads(text)
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=502, detail=f"AI returned invalid JSON")
+
+    return result["questions"]
+
+
+
+
+
+    
