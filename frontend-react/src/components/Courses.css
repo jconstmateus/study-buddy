@@ -1,3 +1,14 @@
+.courses-list-page {
+  padding: 40px;
+}
+
+.courses-title {
+  margin: 0 0 24px;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--brand-teal-dark);
+}
+
 .courses-page {
   display: flex;
   gap: 32px;

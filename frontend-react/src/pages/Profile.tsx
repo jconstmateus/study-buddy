@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
 import { FaRegUser } from "react-icons/fa";
 import { MdAttachEmail } from "react-icons/md";
 
 function Profile() {
+
+  const navigate = useNavigate();
 
   // Const to show profile
   const [name, setName] = useState("");
@@ -47,6 +50,10 @@ function Profile() {
           const result = await request.json();
           setName(result.name);
           setEmail(result.email);
+
+        } else if (request.status === 401) {
+          localStorage.removeItem("token");
+          navigate("/");
 
         // Error - update the error
         } else {
@@ -98,6 +105,10 @@ function Profile() {
         setNewEmail("");
         setEmailSuccess(result.message);
 
+      } else if (request.status === 401) {
+        localStorage.removeItem("token");
+        navigate("/");
+
       } else {
         setEmailError(await request.text());
       }
@@ -139,6 +150,10 @@ function Profile() {
         setPasswordPass("");
         setNewPassword("");
         setPasswordSuccess(result.message);
+
+      } else if (request.status === 401) {
+        localStorage.removeItem("token");
+        navigate("/");
 
       } else {
         setPasswordError(await request.text());

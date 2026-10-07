@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { FiGrid, FiBookOpen, FiHelpCircle, FiUser } from 'react-icons/fi';
+import { FaBullseye } from 'react-icons/fa';
 import './Sidebar.css';
 
 function Sidebar() {
@@ -20,6 +21,14 @@ function Sidebar() {
         >
           <FiBookOpen className="sidebar-link-icon" />
           Courses
+        </NavLink>
+
+        <NavLink
+          to="/study-goals"
+          className={({ isActive }) => "sidebar-link" + (isActive ? " sidebar-link-active" : "")}
+        >
+          <FaBullseye className="sidebar-link-icon" />
+          Study Goals
         </NavLink>
 
         <NavLink

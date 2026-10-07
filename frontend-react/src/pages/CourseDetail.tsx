@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import '../components/Courses.css'
 import { FaBook, FaPen, FaGraduationCap, FaTasks, FaBullseye, FaRegTrashAlt } from "react-icons/fa";
 import type { IconType } from "react-icons";
@@ -25,15 +25,10 @@ const EVENT_TYPE_CONFIG: { type: EventType; label: string; icon: IconType }[] = 
   { type: "STUDY_GOAL", label: "Study Goals", icon: FaBullseye },
 ];
 
-// One icon per status 
-const EVENT_STATUS_CONFIG: { status: EventStatus; icon: IconType }[] = [
-  { status: "TODO", icon: MdCheckBoxOutlineBlank },
-  { status: "DONE", icon: MdCheckBox },
-];
-
 function CourseDetail() {
 
     const { id } = useParams();
+    const navigate = useNavigate();
     const[nameCourse, setNameCourse] = useState("");
     const[colorCourse, setColorCourse] = useState("");
     const [error, setError] = useState("");
@@ -44,7 +39,7 @@ function CourseDetail() {
     // Param. to create new event
     const[titleEvent, setTitleEvent] = useState("");
     const[typeEvent, setTypeEvent] = useState<EventType | "">("");
-    const[statusEvent, setEventStatus] = useState<EventStatus>("TODO");
+    const[statusEvent] = useState<EventStatus>("TODO");
     const[dateEvent, setDateEvent] = useState("");
     const [addEventSubmitting, setAddEventSubmitting] = useState(false);
 
@@ -64,6 +59,9 @@ function CourseDetail() {
             const result = await request.json()
             setNameCourse(result.name);
             setColorCourse(result.color);
+        } else if (request.status === 401) {
+            localStorage.removeItem("token");
+            navigate("/");
         } else {
              setError(await request.text());
         }
@@ -80,7 +78,7 @@ function CourseDetail() {
        const token = localStorage.getItem("token");
 
        try {
-        const request = await fetch(`http://localhost:8080/events/${id}`, {
+        const request = await fetch(`http://localhost:8080/courses/${id}/events`, {
           method: "GET",
           headers: { "Authorization": "Bearer " + token }
         });
@@ -88,7 +86,10 @@ function CourseDetail() {
         if (request.ok) {
           const result = await request.json();
           setEvents(result); // Receive a list of Events
-            
+
+        } else if (request.status === 401) {
+            localStorage.removeItem("token");
+            navigate("/");
         } else {
              setError(await request.text());
         }
@@ -130,6 +131,9 @@ function CourseDetail() {
                 setNameCourse(result.name);
                 setColorCourse(result.color);
                 setEditing(false);
+            } else if (request.status === 401) {
+                localStorage.removeItem("token");
+                navigate("/");
             } else {
                 setError(await request.text());
             }
@@ -146,7 +150,7 @@ function CourseDetail() {
         const token = localStorage.getItem("token");
 
         try {
-            const request = await fetch(`http://localhost:8080/events/by-course/${id}`, {
+            const request = await fetch(`http://localhost:8080/courses/${id}/events`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -156,7 +160,6 @@ function CourseDetail() {
                     title: titleEvent,
                     eventType: typeEvent,
                     eventStatus: statusEvent,
-                    // EXAM already carries a time (datetime-local); other types are date-only, default to end of day
                     date: typeEvent === "EXAM" ? dateEvent : `${dateEvent}T23:59`
                 })
             });
@@ -167,6 +170,9 @@ function CourseDetail() {
                 setTitleEvent("");
                 setTypeEvent("");
                 setDateEvent("");
+            } else if (request.status === 401) {
+                localStorage.removeItem("token");
+                navigate("/");
             } else {
                 setError(await request.text());
             }
@@ -201,6 +207,9 @@ function CourseDetail() {
       e.id === eventId ? { ...e, eventStatus: result as EventStatus } : e
     ));
 
+    } else if (request.status === 401) {
+      localStorage.removeItem("token");
+      navigate("/");
     } else {
       setError(await request.text());
     }
@@ -228,6 +237,9 @@ function CourseDetail() {
 
       setEvents(events.filter((event) => event.id !== eventId)); // Remove course from the list
 
+    } else if (request.status === 401) {
+      localStorage.removeItem("token");
+      navigate("/");
     } else {
       setError(await request.text());
     }
@@ -367,7 +379,9 @@ function CourseDetail() {
                     >
                       {isOverdue && <span className="event-overdue-badge">Overdue</span>}
                       <Icon style={{ color: colorCourse }} />
+                      <Link to={`/study-goals/${event.id}`}>
                       <span>{event.title}</span>
+                      </Link>
                       <span onClick={() => handleChangeStatus(event.id, event.eventStatus === "DONE" ? "TODO" : "DONE")} style={{ cursor: "pointer" }}>
                       {event.eventStatus === "DONE" ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
                       </span>

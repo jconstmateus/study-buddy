@@ -2,6 +2,7 @@ package com.studybuddy.backend_java.service;
 
 import com.studybuddy.backend_java.exceptions.ResourceNotFoundException;
 import com.studybuddy.backend_java.model.ChatMessage;
+import com.studybuddy.backend_java.model.StudyGoal;
 import com.studybuddy.backend_java.repository.ChatMessageRepository;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +36,9 @@ public class ChatMessageService {
 
     public void deleteById(Long id) {
         chatMessageRepository.deleteById(id);
+    }
+
+    public List<ChatMessage> findByStudyGoal(StudyGoal studyGoal) {
+        return chatMessageRepository.findByStudyGoalOrderByTimestampAsc(studyGoal);
     }
 }

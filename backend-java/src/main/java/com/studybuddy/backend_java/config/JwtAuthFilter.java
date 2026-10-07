@@ -1,6 +1,8 @@
 package com.studybuddy.backend_java.config;
 
 import com.studybuddy.backend_java.service.JwtService;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -57,8 +59,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             // Store the authentication within the context
             SecurityContextHolder.getContext().setAuthentication(authToken);
 
-        } catch (Exception e) {
-            // Invalid token, proceed
+        } catch (ExpiredJwtException e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("text/plain;charset=UTF-8");
+            response.getWriter().write("Sessão expirada. Inicia sessão novamente.");
+            return;
+
+        } catch (JwtException e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("text/plain;charset=UTF-8");
+            response.getWriter().write("Token inválido.");
+            return;
         }
 
         filterChain.doFilter(request, response);

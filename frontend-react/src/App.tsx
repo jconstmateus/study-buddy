@@ -6,6 +6,8 @@ import Courses from './pages/Courses';
 import CourseDetail from './pages/CourseDetail';
 import About from './pages/About';
 import Tutorial from './pages/Tutorial';
+import StudyGoals from './pages/StudyGoals';
+import StudyGoalsDetails from './pages/StudyGoalsDetails';
 import AppLayout from './components/AppLayout';
 
 function App() {
@@ -19,7 +21,9 @@ function App() {
         <Route path="/courses" element={<Courses />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/tutorial" element={<Tutorial />} />
-        <Route path="/course/:id" element={<CourseDetail />} />
+        <Route path="/courses/:id" element={<CourseDetail />} />
+        <Route path="/study-goals" element={<StudyGoals />} />
+        <Route path="/study-goals/:id" element={<StudyGoalsDetails />} />
       </Route>
     </Routes>
   );

@@ -4,8 +4,8 @@ import com.studybuddy.backend_java.dto.StatusChangeRequest;
 import com.studybuddy.backend_java.exceptions.NotAuthorizedException;
 import com.studybuddy.backend_java.model.Course;
 import com.studybuddy.backend_java.model.Event;
+import com.studybuddy.backend_java.model.EventType;
 import com.studybuddy.backend_java.model.User;
-import com.studybuddy.backend_java.service.CourseService;
 import com.studybuddy.backend_java.service.EventService;
 import com.studybuddy.backend_java.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -21,37 +21,10 @@ public class EventController {
     // Use of respective service for each request
     private final EventService eventService;
     private final UserService userService;
-    private final CourseService courseService;
 
-    public EventController(EventService eventService, UserService userService, CourseService courseService) {
+    public EventController(EventService eventService, UserService userService) {
         this.eventService = eventService;
         this.userService = userService;
-        this.courseService = courseService;
-    }
-
-    @PostMapping("/by-course/{id}")
-    public Event create(@RequestBody Event event, @PathVariable Long id, Authentication authentication) {
-        User user = userService.getCurrentUser(authentication);
-        Course course = courseService.findById(id);
-
-        if (user.getId().equals(course.getUser().getId())) {
-            event.setCourse(course);
-            return eventService.save(event);
-        } else {
-            throw new NotAuthorizedException("Not Authorized to Add Events to This Course");
-        }
-    }
-
-    @GetMapping("/{id}") // GET (object by id extracted in the path)
-    public List<Event> findbyCourse(@PathVariable Long id, Authentication authentication) {
-        User user = userService.getCurrentUser(authentication);
-        Course course = courseService.findById(id);
-
-        if (user.getId().equals(course.getUser().getId())) {
-            return eventService.findByCourse(course);
-        } else {
-            throw new NotAuthorizedException("Not Authorized to Modify This Course");
-        }
     }
 
     @DeleteMapping("/{id}") // DELETE (object by id extracted in the path)
@@ -68,6 +41,19 @@ public class EventController {
         }
     }
 
+    @GetMapping("/{id}") // GET (object by id extracted in the path)
+    public Event findById(@PathVariable Long id, Authentication authentication) {
+        User user = userService.getCurrentUser(authentication);
+        Event event = eventService.findById(id);
+
+        if (user.getId().equals(event.getCourse().getUser().getId())) {
+            return event;
+
+        } else {
+            throw new NotAuthorizedException("Not Authorized to Read This Event");
+        }
+    }
+
     @PutMapping("/{id}") // PUT (update object by id, with new data on Body)
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody StatusChangeRequest newEventStatus, Authentication authentication) {
         User user = userService.getCurrentUser(authentication);
@@ -81,6 +67,17 @@ public class EventController {
         } else {
             throw new NotAuthorizedException("Not Authorized to Modify This Event");
         }
+    }
+
+    @GetMapping // GET (list of all events, optionally filtered by type)
+    public List<Event> findAllEvents(@RequestParam(required = false) EventType type, Authentication authentication) {
+        User user = userService.getCurrentUser(authentication);
+
+        if (type != null) {
+            return eventService.findByCourseUserAndEventType(user, type);
+        }
+
+        return eventService.findByCourseUser(user);
     }
 
 }
