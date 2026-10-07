@@ -10,7 +10,7 @@
 
 ## About
 
-Study Buddy was born from a simple need: making studying feel less chaotic. It brings your calendar, course materials, and study tools together, with the help of AI, helping students organize their academic life without the usual chaos of scattered deadlines and materials.
+Study Buddy was born from a simple need: making studying feel less chaotic. It brings your calendar and AI-powered study tools together, helping students organize their academic life without the usual chaos of scattered deadlines and materials.
 
 This project is being built as a full-stack learning journey and portfolio piece, covering everything from relational database design to secure authentication and a responsive frontend.
 
@@ -36,7 +36,7 @@ This project is being built as a full-stack learning journey and portfolio piece
 
 ### Implemented
 
-- **Authentication** - JWT-based login and registration (Spring Security), with encrypted password storage
+- **Authentication** - JWT-based login and registration (Spring Security), with BCrypt-hashed password storage
 - **Account management** - change password and change email (with automatic token refresh), both requiring current password confirmation
 - **Courses** - create, list, update, and delete your own courses, each with a custom color
 - **Events** - create, list, update status, and delete academic events (exams, assignments, study goals) tied to a specific course
@@ -145,6 +145,14 @@ This project is being built as a full-stack learning journey and portfolio piece
       <br/>
       <em>Tutor reply using conversation history and a system prompt</em>
     </td>
+    <!-- Quiz screenshot: when you have it, drag the image into the GitHub editor,
+         copy the user-attachments URL, and uncomment this cell.
+    <td align="center">
+      <img src="PASTE_QUIZ_IMAGE_URL_HERE" width="500"/>
+      <br/>
+      <em>AI-generated practice quiz with auto-grading</em>
+    </td>
+    -->
   </tr>
 </table>
 </div>
@@ -178,25 +186,36 @@ The backend follows a consistent layered architecture across all entities, with 
 - Java 26+
 - Node.js
 - Docker
-- Python 3.x
-- Anthropic API key
+- Python 3.x (exact version in the `Pipfile`) and [Pipenv](https://pipenv.pypa.io) (`pip install pipenv`)
+- An Anthropic API key (API usage is billed by Anthropic)
 
 ### Backend
 
 ```bash
 cd backend-java
 docker-compose up -d          # starts PostgreSQL
-./mvnw spring-boot:run        # starts the API on localhost:8080
+./mvnw spring-boot:run        # starts the API on localhost:8080 (Windows: mvnw.cmd spring-boot:run)
 ```
 
 ### AI service
 
+The backend calls this service at `localhost:8000`, so start it before using the AI features.
+
 ```bash
-cd ai-service
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env          # add your ANTHROPIC_API_KEY
-uvicorn main:app --reload
+cd ai-service-python
+pipenv install
+```
+
+Create a file named `.env` inside `ai-service-python/` with your key:
+
+```
+ANTHROPIC_API_KEY=your-key-here
+```
+
+Then start the service:
+
+```bash
+pipenv run uvicorn main:app --reload --port 8000     # starts on localhost:8000
 ```
 
 ### Frontend
@@ -211,9 +230,9 @@ npm run dev                   # starts on localhost:5173
 
 ```
 study-buddy/
-├── backend-java/       # Spring Boot REST API (+ docker-compose.yml for PostgreSQL)
-├── frontend-react/     # React + TypeScript SPA
-└── ai-service/         # Python/FastAPI microservice (Claude API)
+├── backend-java/         # Spring Boot REST API (+ docker-compose.yml for PostgreSQL)
+├── frontend-react/       # React + TypeScript SPA
+└── ai-service-python/    # Python/FastAPI microservice (Claude API)
 ```
 
 ## Development workflow
